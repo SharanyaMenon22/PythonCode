@@ -36,10 +36,10 @@ print(marks)
 
 # declare 2 variables with data and variables names of your choice.
 # do some operation with it and print the output.
-Marks = 95
-Increment = 10
-print("Marks", Marks)
-print("Incremented by",Increment)
-IncrementedMarks = Marks + Increment
-print("Marks incremented:", IncrementedMarks)
-print("Marks", Marks)
+marks = 95
+increment = 10
+print("Marks", marks)
+print("Incremented by",increment)
+incrementedMarks = marks + increment
+print("Marks incremented:", incrementedMarks)
+print("Marks", marks)
