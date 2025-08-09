@@ -65,7 +65,63 @@ text1 = "This is a python class"
 text2 = "Weather is cool"
 text3 = "Summers are hot"
 
-# print me "Weather is hot"
+# print me "Weather is hot" using the data in variables text1, text2, text3
+
+weather = text2[0] + text2[1] + text2[2] + text2[3] + text2[4] + text2[5] + text2[6]
+is_word = text1[5] + text1[6]
+hot = text3[12] + text3[13] + text3[14]
+
+print(weather + " " + is_word + " " + hot)
+
+# in a text we can separate the words by space.
+# the method used to do that is split.
+
+text1_words = text1.split(" ")
+print(text1_words)
+
+text2_words = text2.split(" ")
+
+print(text2_words)
+
+text3_words = text3.split(" ")
+print(text3_words)
+
+
+print(text2_words[0] + " " + text1_words[1] + " " + text3_words[2])
+
+# ['This', 'is', 'a', 'python', 'class']
+# ['Weather', 'is', 'cool']
+# ['Summers', 'are', 'hot']
+
+# in a list to find out the index at which a word is there...
+# we can use the method index.
+# index is called on the list of words.
+
+is_index = text1_words.index("is")
+weather_index = text2_words.index("Weather")
+hot_index = text3_words.index("hot")
+
+print(text2_words[weather_index] + " " + text1_words[is_index] + " " + text3_words[hot_index])
+
+print(text2.index("Weather"))
+
+text = "This is a python class"
+
+print("Index of the word python: ", text.index("python"))
+
+'''
+How to search for a text that is not of the same case?
+  1. Ask python to ignore the case that we are looking for ⛔
+  2. How about make the case same for the source and the text to find as same? 
+'''
+
+text_upper = text.upper()
+python_upper = "Python".upper()
+
+print("Index of the word Python: ", text_upper.index(python_upper))
+
+
+print("Prints true or false:", text.endswith("class"))
 
 
 
