@@ -14,6 +14,7 @@ print(text)
 print("Printing the first character", text[0])
 print("Printing the second character", text[1])
 
+# subscript operator.
 print("Printing some random character", text[19])
 
 # we get the length of the string using len() method
