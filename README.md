@@ -2,10 +2,13 @@
 
 ## Table of Contents
 
-- [Lesson1/](Lesson1/)
-  - [Variables.py](Lesson1/Variables.py)
-
-
+- [Lesson1/](1_Variables/)
+  - [Variables.py](1_Variables/Variables.py)
+- [Lesson2](2_Strings)
+  - [Strings.py](2_Strings/Strings.py)
+- [Lesson3]3_Conditions)
+  - [Conditions.py](3_Conditions/Conditions.py)
+  - [Calculator.py](3_Conditions/Calculator.py)
 
 ## Bash commands
 
