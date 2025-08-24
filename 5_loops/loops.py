@@ -70,10 +70,10 @@ def doubles( num, num_times):
     return num
 
 
-num = int(input("Enter num to be doubled: "))
-num_times = int(input("Number of times to be double: "))
-result = doubles( num, num_times )
-print(f"{num} doubled {num_times} times and the result is {result}")
+# num = int(input("Enter num to be doubled: "))
+# num_times = int(input("Number of times to be double: "))
+# result = doubles( num, num_times )
+# print(f"{num} doubled {num_times} times and the result is {result}")
 
 
 
@@ -82,19 +82,22 @@ Let's say a person invested 1000$ for 5 years.
 A interest of 2% is accured for each year.
 What is the final amount after 5 years.
 '''
-def investment( principle, No_years):
-    Interest = 2/100
+def investment( principle, rate, no_years):
+    rate = rate.strip()
+    if '%' in rate:
+        rate = rate.strip('%')
+    rate = float(rate)/100
+    
     i = 1
-    while i <= No_years:
-        principle = principle + principle * Interest
+    while i <= no_years:
+        principle = principle + principle * rate
         print(f"After {i} years: {principle:.2f}")
         i+=1 
     return principle
 
-principle = 100
-No_years = 5
-result = investment(principle, No_years)
-print(result)
-
-
+principal = int(input("Enter pincipal: "))
+no_years = int(input("Enter the investment period (years): "))
+rate = input("Enter the rate of interest: ")
+result = investment(principal, rate, no_years)
+print(f"After {no_years} years for an investment of {principal} at {rate} p.a., the maturity value is : {result:.2f}")
 
