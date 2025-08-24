@@ -70,10 +70,10 @@ def doubles( num, num_times):
     return num
 
 
-# num = int(input("Enter num to be doubled: "))
-# num_times = int(input("Number of times to be double: "))
-# result = doubles( num, num_times )
-# print(f"{num} doubled {num_times} times and the result is {result}")
+num = int(input("Enter num to be doubled: "))
+num_times = int(input("Number of times to be double: "))
+result = doubles( num, num_times )
+print(f"{num} doubled {num_times} times and the result is {result}")
 
 
 
