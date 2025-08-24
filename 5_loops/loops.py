@@ -82,7 +82,19 @@ Let's say a person invested 1000$ for 5 years.
 A interest of 2% is accured for each year.
 What is the final amount after 5 years.
 '''
+def investment( principle, No_years):
+    Interest = 2/100
+    i = 1
+    while i <= No_years:
+        principle = principle + principle * Interest
+        print(f"After {i} years: {principle:.2f}")
+        i+=1 
+    return principle
 
+principle = 100
+No_years = 5
+result = investment(principle, No_years)
+print(result)
 
 
 
