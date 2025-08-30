@@ -70,10 +70,10 @@ def doubles( num, num_times):
     return num
 
 
-num = int(input("Enter num to be doubled: "))
-num_times = int(input("Number of times to be double: "))
-result = doubles( num, num_times )
-print(f"{num} doubled {num_times} times and the result is {result}")
+# num = int(input("Enter num to be doubled: "))
+# num_times = int(input("Number of times to be double: "))
+# result = doubles( num, num_times )
+# print(f"{num} doubled {num_times} times and the result is {result}")
 
 
 
@@ -83,7 +83,6 @@ A interest of 2% is accured for each year.
 What is the final amount after 5 years.
 '''
 def investment( principle, rate, no_years):
-    rate = rate.strip()
     if '%' in rate:
         rate = rate.strip('%')
     rate = float(rate)/100
@@ -95,9 +94,25 @@ def investment( principle, rate, no_years):
         i+=1 
     return principle
 
-principal = int(input("Enter pincipal: "))
-no_years = int(input("Enter the investment period (years): "))
-rate = input("Enter the rate of interest: ")
-result = investment(principal, rate, no_years)
-print(f"After {no_years} years for an investment of {principal} at {rate} p.a., the maturity value is : {result:.2f}")
+
+def calculate_investment(principal, no_years, rate):
+    principal = int(input("Enter pincipal: "))
+    no_years = int(input("Enter the investment period (years): "))
+    rate = input("Enter the rate of interest: ").replace(" ", "")
+    result = investment(principal, rate, no_years)
+
+    if '%' not in rate:
+        rate = rate + '%'
+    result = investment(principal, rate, no_years)
+    return (f"After {no_years} years for an investment of {principal} at {rate} p.a., the maturity value is : {result:.2f}")
+
+
+
+'''
+if user enters % in the rate. Then ignore it when calculating the interest and the variable rate is only considered as a float instead of a string. ✅
+if user does not enter % in the rate. Then no problem in calculating the interest and since we don't have % in the rate, the variable rate is still constidered as float instead of a string. ✅
+The 👆 case, the print statement should show % for the interest rate. ⛔
+'''
+
+
 
