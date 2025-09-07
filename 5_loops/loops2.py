@@ -6,11 +6,6 @@ But the breaking of lines should be such that the words should not broken down i
 '''
 
 # long text
-text = """
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-"""
-
 
 '''
 
@@ -21,22 +16,83 @@ nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du
 5. go to step 2.
 '''
 
-lines = text.split("\n")
-for line in lines:
-    len_of_line = len(line)    
-    curr_idx = 0
-    while ( len_of_line >= 120 ):
-        part_of_line = line[curr_idx:curr_idx + 119]
+'''
+column count: 5
 
-        # Need to check if we have space next or not. if not go backwards to find space and take the text only till then.
-        if line[curr_idx:curr_idx + 120] != ' ':
-            index = part_of_line.rfind(' ')
-            part_of_line = line[curr_idx: curr_idx + index]
-            curr_idx = curr_idx + index
-        else:
-            curr_idx = curr_idx + 119
+abc defghi jklm
+nopqr stuvw xyz
+'''
+
+'''
+abc
+defghi
+jklm
+nopqr
+stuvw
+xyz
+'''
+
+def get_word(tmp, line):
+    tmp = str(tmp)
+    line = str(line)
+
+    # the length of original string and substring is the same
+    if len(line) == len(tmp):
+        return tmp
+    
+    # let's backtrack to find a space.
+    # abc def ghijklmn
+    index = line.rfind(' ', 0, len(tmp))
+    if index != -1: # we found a space while backtracking.
+        return line[0: index]
+    
+    # we could not find space while backtracking...
+    # so let's do a forward search
+    index = line.find(' ', len(tmp) -1)
+    if index != -1: # there is space.
+        return line[0: index]
+    
+    return line
 
 
-        print(part_of_line)        
-        len_of_line = len_of_line - len(part_of_line)
-    print(line[curr_idx:])
+
+def line_wrap( text, column_count):
+    # split the text by line breaks.
+    lines = str(text).split('\n')
+
+    for line in lines:
+        
+        while line:
+            if len(line) >= column_count: # difficult part.
+                # get the substring from first index to the column_count.
+                line = line.lstrip(' ')
+                tmp = line[0: column_count]
+                tmp = get_word(tmp, line)
+                # update the line so that we remove the tmp from the line.
+                line = line[len(tmp): ]
+                print(tmp)
+
+            else:
+                print(line)
+                break
+
+
+
+
+
+text = '''
+abc defghi jklm
+nopqr stuvw xyz
+12345
+'''
+
+line_wrap(text, 5)
+
+text = '''
+abc
+def
+ghi
+123455566 7890
+'''
+
+line_wrap(text, 5)
