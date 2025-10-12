@@ -99,57 +99,75 @@ print("Two sum...")
 
 value_index_dict = dict()
 target = 7
-nums = [1, 2, 3, 4, 1]
+nums = [1, 3, 2, 5, 1]
+
+
+
+
+
+
 
 # {1 : 0}
-# { 1 : 0, 2: 1}
-# { 1 : 0, 2 : 1, 3 : 2}
+# { 1 : 0, 3: 1}
+# { 1 : 0, 3 : 1, 2 : 2}
 # { 1 : 0, 2 : 1, 3 : 2 } => [2, 3]
 
-# resultant_indices = []
-# found = False
+
+# value_index_dict = {}
+# list_of_indices = []
 # for index, num in enumerate(nums):
-#     if found:
+#     compliment = target - num
+#     if compliment in value_index_dict:
+#         list_of_indices.append(index)
+#         list_of_indices.append(value_index_dict[compliment])
 #         break
+#     else:
+#         value_index_dict[num] = index
 
-#     # if num == target:
-#     #     resultant_indices.append(index)
-#     # else:
-#     #     list_of_indices = value_index_dict.get(num, [])
-#     #     list_of_indices.append(index)
-#     #     if sum(list_of_indices) == target:
-#     #         break
-#     sum = 0
+# print(sorted(list_of_indices))
 
-#     for key, value in value_index_dict.items():
-#         temp = 0
-#         for _ in value:
-#             temp += key
-#         if temp + num == target:
-#             resultant_indices.append(index)
-#             resultant_indices.extend(value)
-#             found = True
-#             break
-#         if found:
-#             break
-            
-#     list_of_indices = value_index_dict.get(num, [])
-#     list_of_indices.append(index)         
-#     value_index_dict[num] = list_of_indices       
-# print(sorted(resultant_indices))
+
+# Minimal, safe single-pass two-sum implementation and invocation
+def two_sum(nums, target):
+    """Return indices of two numbers that add up to target, or None."""
+    seen = {}
+    for i, n in enumerate(nums):
+        comp = target - n
+        if comp in seen:
+            return [seen[comp], i]
+        seen[n] = i
+    return None
+
+
+result = two_sum(nums, target)
+if result:
+    print(f"Two-sum result: indices={result}, values={[nums[i] for i in result]}")
+else:
+    print("Two-sum: no solution")
 
 
 
+# Get me the count of each repeated numbers in the list.
+nums = [1,2,1,3,4,1,5, 5] # { 1 : 3, 2 : 1, 3 : 1, 5 : 2 }
 
-value_index_dict = {}
-list_of_indices = []
-for index, num in enumerate(nums):
-    compliment = target - num
-    if compliment in value_index_dict:
-        list_of_indices.append(index)
-        list_of_indices.append(value_index_dict[compliment])
-        break
-    else:
-        value_index_dict[num] = index
+occurences = {}
 
-print(sorted(list_of_indices))
+for num in nums:
+    count = occurences.get(num, 0)
+    occurences[num] = count + 1
+
+print(occurences)
+
+nums = [1,2,3,4,5,6]
+# group the numbers by even and odd. {'even': [2,4,6], 'odd': [1,3,5]}
+
+even_odd_dict = {}
+for num in nums:
+    even_or_odd = 'even' if num % 2 == 0 else 'odd'
+    list_of_nums = even_odd_dict.get(even_or_odd, [])
+    list_of_nums.append(num)
+    even_odd_dict[even_or_odd] = list_of_nums
+
+
+print(even_odd_dict)
+
