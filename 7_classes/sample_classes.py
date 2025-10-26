@@ -137,5 +137,5 @@ for key, employees in group_by_profession.items():
     if key != 'Software Engineer':
         not_sw.append(employees)
 
-for employee in employees:
-    print(employee)
+    for employee in employees:
+        print(employee)

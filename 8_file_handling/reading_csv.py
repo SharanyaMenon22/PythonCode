@@ -69,7 +69,7 @@ def robust_way():
     list_of_employees = []
 
     emp_csv_path = os.path.join(os.path.abspath(__file__), '..', 'employee.csv')
-
+    headers = {}
     with open(emp_csv_path, 'r') as file:
         for index, line in enumerate(file):
             if index == 0:
