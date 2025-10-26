@@ -31,16 +31,28 @@ Admin POV
 CONFIRMATION = 'Confirmation'
 WAITING_LIST = 'Waiting List'
 CANCELED = 'Canceled'
+MALE = 'M'
+FEMALE = 'F'
+OTHERS = 'O'
 
+class Person:
+
+    def __init__(self, name, age, gender) -> None:
+        self.name = name
+        self.age = age
+        self.gender = gender
+
+    def __str__(self) -> str:
+        return f"Passenger Details({self.name}, {self.age}, {self.gender})"
 
 class Booking:
     BOOKING_ID = 0
 
-    def __init__(self, status):
+    def __init__(self, person, status):
         self.status = status
         Booking.BOOKING_ID +=1 
         self.id = Booking.BOOKING_ID
-
+        self.person = person        
 
 class Train:
     ID = 0
@@ -64,7 +76,7 @@ class Train:
         
         return self.capacity - total_confirmations
 
-    def book(self):
+    def book(self, person):
         '''
             if there are enough seats available, book the ticket and status is confirmed else book the ticket, status is waiting list.
         '''
@@ -76,7 +88,7 @@ class Train:
         #     self.bookings.append(booking)
 
         status = CONFIRMATION if self.availability() > 0 else WAITING_LIST
-        booking = Booking(status)
+        booking = Booking(person, status)
         self.bookings.append(booking)
         print(f"Booked with status: {status}")
 
@@ -123,10 +135,10 @@ class BookingSystem:
         self.trains.append(train)
 
 
-    def book_ticket(self, train):
+    def book_ticket(self, person, train):
         for train_l in self.trains:
             if train_l.name == train.name:
-                train.book()
+                train.book(person)
 
     def cancel_ticket(self, train, id):
          for train_l in self.trains:
@@ -138,19 +150,23 @@ class BookingSystem:
             print(f"Train: {train.name}")
 
             for booking in train.get_bookings():
-                print(f"{booking.id} : {booking.status}")
+                print(f"{booking.id} : {booking.status} , {booking.person}")
 
     
-
-
-
 def main():
     vb = Train("Vande Bharat", 5)
 
     booking_system = BookingSystem(vb)
 
-    for _ in range(1, 15):
-        booking_system.book_ticket(vb)
+
+    '''
+        For now, the passenger details are hard-coded.
+        To make it more realistic...
+        1. Ask user to input .. ie using input()
+        2. If you want to go crazy with automation, then randomly generate name ( predefined set) , age ( 1 - 100), Gender (randomized of Male, Female and Others)
+    '''
+    for _ in range(1, 15):        
+        booking_system.book_ticket( Person("xyz", 25, MALE), vb)
     
     booking_system.show_bookings()
 
