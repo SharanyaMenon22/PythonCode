@@ -4,22 +4,30 @@ import datetime
 class Trade:
     def __init__(self,
                  transaction_time,
-                 orderId,
-                 parentOderId,
+                 order_id,
+                 parent_order_id,
                  symbol,
                  price,
                  qty) -> None:
         
         self.transaction_time = transaction_time
-        self.orderId = orderId
-        self.parentOderId = parentOderId
+        self.order_id = order_id
+        self.parent_order_id = parent_order_id
         self.symbol = symbol
         self.price = price
         self.qty = qty
         self.child_trades = []        
 
     def __str__(self) -> str:
-        return f"{self.transaction_time},{self.orderId},{self.parentOderId},{self.symbol},{self.price},{self.qty}"        
+        s = (
+            f'{self.transaction_time},'
+            f'{self.order_id},'
+            f'{self.parent_order_id},'
+            f'{self.symbol},'
+            f'{self.price},'
+            f'{self.qty}'
+        )
+        return s.strip()
 
 def parse_header(line):
     header = {}
@@ -47,21 +55,24 @@ def load_trades(file_path):
                       parts[header['Price']],
                       parts[header['Qty']])
         
-        trades[trade.orderId] = trade
-        if trade.parentOderId in trades:
-            child_trades = trades[trade.parentOderId].child_trades
+        trades[trade.order_id] = trade
+        if trade.parent_order_id in trades:
+            child_trades = trades[trade.parent_order_id].child_trades
             child_trades.append(trade)
 
     return trades
 
 
-def parse_date_time(tstr):
+def parse_date_time(trade):
     try:
-        hr, min, sec = tstr.split(":")
-        time_obj = datetime.time(int(hr), int(min), int(sec))
+        tstr = trade.transaction_time
+         # "14:30:15"
+        hr, minutes, sec = tstr.split(":")
+        time_obj = datetime.time(int(hr), int(minutes), int(sec))
         return datetime.datetime.combine(datetime.date.today(), time_obj)
-    except Exception as e:
-        print(e)
+    except (AttributeError, ValueError, TypeError) as e:
+        # tstr was None, malformed, or conversion failed; return None to indicate parse failure
+        print(f"Error parsing transaction time for the trade: '{trade}': {e}")
         return None
     
 def calculate_secs(child_time, parent_time):
@@ -75,17 +86,27 @@ def calculate_secs(child_time, parent_time):
 def calculate_time_metrics(trades, out_file):
 
     file = open(out_file, 'w')
-    file.write(f'OrderId,ParentOrderId,Symbol,Price,Qty,TimeInSeconds\n')
+    file.write('OrderId,ParentOrderId,Symbol,Price,Qty,TimeInSeconds\n')
     for trade in trades.values():
         if len(trade.child_trades) == 0:
             continue
-        parent_transaction_time = parse_date_time(trade.transaction_time)
+        parent_transaction_time = parse_date_time(trade)
         # print(f"OrderID: {trade.orderId}")
         for child in trade.child_trades:
-            child_transaction_time = parse_date_time(child.transaction_time)
+            child_transaction_time = parse_date_time(child)
             secs = calculate_secs(child_transaction_time, parent_transaction_time)            
             # print(f"OrderID:{child.orderId}, Time differnce in secs:{secs:.0f}")
-            file.write(f'{child.orderId},{trade.orderId},{trade.symbol},{child.price},{child.qty},{secs}\n')
+            
+            s = (
+                f'{child.order_id},'
+                f'{trade.order_id},'
+                f'{trade.symbol},'
+                f'{child.price},'
+                f'{child.qty},'
+                f'{secs}\n'
+            )
+
+            file.write(s)                        
 
 
 
